@@ -77,10 +77,10 @@ int main(int argc, char **argv)
 static void generateMaze(MazeCell *cell)
 {
     std::vector<MazeCell*> neighbors = cell->neighbors;
+    cell->visited = true;
     while (neighbors.size() > 0) {
         int i = rand() % neighbors.size();
         if (!neighbors[i]->visited) {
-            neighbors[i]->visited = true;
             walls[MIN(cell->y, neighbors[i]->y) * 2 + ABS(cell->y - neighbors[i]->y)][MAX(cell->x, neighbors[i]->x)] = false;
             generateMaze(neighbors[i]);
         }
