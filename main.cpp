@@ -8,6 +8,8 @@
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define ABS(a) ((a) >= 0 ? (a) : -(a))
+#define WALL_CHAR "#"
+#define SPACE_CHAR " "
 
 struct MazeCell
 {
@@ -92,7 +94,7 @@ static void generateMaze(MazeCell *cell)
             // will be on the even indexes, otherwise it would be on the odd ones.
             
             // For the x index of the wall, just get the maximum x index between the examined cells.
-            // Keep in mind when processign the walls, the 0 x index should be ignored as the
+            // Keep in mind when processing the walls, the 0 x index should be ignored as the
             // implementation is now. That is because the walls that separate the cells horizontally
             // are one less than the walls that separate the cells vertically.
             walls[MIN(cell->y, neighbors[i]->y) * 2 + ABS(cell->y - neighbors[i]->y)][MAX(cell->x, neighbors[i]->x)] = false;
@@ -107,23 +109,28 @@ static void printMaze()
     for (int y = 0; y <= MAZE_HEIGHT * 2; ++y) {
         for (int x = 0; x <= MAZE_WIDTH * 2; ++x) {
             if (x == 0 || y == 0 || x == MAZE_WIDTH * 2 || y == MAZE_HEIGHT * 2) {
-                printf("#");
+                // print the outer walls
+                printf(WALL_CHAR);
             }
             else if (x % 2 == 1 || y % 2 == 1) {
                 if (x % 2 == 1 && y % 2 == 1) {
-                    printf(" ");
+                    // print the cells
+                    printf(SPACE_CHAR);
                 }
                 else {
+                    // process the walls array and print a wall wherever there is one,
+                    // otherwize print a whitespace
                     if (walls[y - 1][x / 2]) {
-                        printf("#");
+                        printf(WALL_CHAR);
                     }
                     else {
-                        printf(" ");
+                        printf(SPACE_CHAR);
                     }
                 }
             }
             else {
-                printf("#");
+                // print the inner dummy walls
+                printf(WALL_CHAR);
             }
         }
         printf("\n");
