@@ -17,7 +17,7 @@ struct MazeCell
 };
 
 // use the even y indexes for the walls that separate the cells horizontally
-// and the odd indexes for the walls that separate the cells vertically
+// and the odd y indexes for the walls that separate the cells vertically
 static bool walls[MAZE_HEIGHT * 2 - 1][MAZE_WIDTH];
 
 static void generateMaze(MazeCell *cell);
@@ -92,9 +92,9 @@ static void generateMaze(MazeCell *cell)
             // will be on the even indexes, otherwise it would be on the odd ones.
             
             // For the x index of the wall, just get the maximum x index between the examined cells.
-            // Keep in mind that in case the examined cells are on the same y index, the 0 x index
-            // should be ignored as is the implementation now. That is because the walls that separate
-            // the cells horizontally are one less than the walls that separate the cells vertically.
+            // Keep in mind that in case the 0 x index should be ignored as is the implementation now.
+            // That is because the walls that separate the cells horizontally are one less than the
+            // walls that separate the cells vertically.
             walls[MIN(cell->y, neighbors[i]->y) * 2 + ABS(cell->y - neighbors[i]->y)][MAX(cell->x, neighbors[i]->x)] = false;
             generateMaze(neighbors[i]);
         }
