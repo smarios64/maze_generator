@@ -92,9 +92,9 @@ static void generateMaze(MazeCell *cell)
             // will be on the even indexes, otherwise it would be on the odd ones.
             
             // For the x index of the wall, just get the maximum x index between the examined cells.
-            // Keep in mind that in case the 0 x index should be ignored as is the implementation now.
-            // That is because the walls that separate the cells horizontally are one less than the
-            // walls that separate the cells vertically.
+            // Keep in mind when processign the walls, the 0 x index should be ignored as the
+            // implementation is now. That is because the walls that separate the cells horizontally
+            // are one less than the walls that separate the cells vertically.
             walls[MIN(cell->y, neighbors[i]->y) * 2 + ABS(cell->y - neighbors[i]->y)][MAX(cell->x, neighbors[i]->x)] = false;
             generateMaze(neighbors[i]);
         }
